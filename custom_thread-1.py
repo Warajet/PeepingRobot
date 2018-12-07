@@ -1,3 +1,6 @@
+import sys
+sys.path.append('lib/')
+
 import car_module as car
 import servo_module as servo
 import myo_interface_module as myo
@@ -6,7 +9,9 @@ import threading
 from time import sleep
 from time import time as current_time
 import math
-import cv2
+
+from device_listener import DeviceListener
+from pose_type import PoseType
 
 class WhileTrueThread(threading.Thread):
     def __init__(self, interval = 0):
@@ -62,22 +67,30 @@ class ServoThread(WhileTrueThread):
         servo.setHorizontalAngle(current_horizontal_angle)
         servo.setVerticalAngle(current_vertical_angle)
         
-class InputThread(WhileTrueThread):
+class InputThread(WhileTrueThread, DeviceListener):
     def __init__(self, control_values):
         WhileTrueThread.__init__(self, 0.1)
         self.__control_values = control_values
+
     def _loop(self):
-        detected_status = myo.get_current_status()
-        if(detected_status == 'forward'):
-            self.__control_values.set_direction('forward')
-        if(detected_status == 'stop'):
-            self.__control_values.set_direction('stop')
-        if(detected_status == 'backward'):
-            self.__control_values.set_direction('backward')
-        if(detected_status == 'left'):
-            self.__control_values.set_direction('left')
-        if(detected_status == 'right'):
-            self.__control_values.set_direction('right')
-        else:
-            pass
+        pass
+
+    def on_pose(self, pose):
+        self.cur_pose = PoseType(pose).name
+
+        if self.cur_pose == "FIST":
+            self.cur_dir = "stop"
+        elif self.cur_pose == "WAVE_IN":
+            self.cur_dir = "left"
+        elif self.cur_pose == "WAVE_OUT":
+            self.cur_dir = "right"
+        elif self.cur_pose == "FINGERS_SPREAD":
+            self.cur_dir = "forward"
+        elif self.cur_pose == "DOUBLE_TAP":
+            self.cur_dir = "backward"
+
+        self.__control_values.set_direction(self.cur_dir)
+        
+        print("Control value: " + self.__control_values)
+        print("Dir: " + self.cur_dir + ", Pose: " + self.cur_pose)
         
