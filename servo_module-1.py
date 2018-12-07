@@ -20,9 +20,17 @@ def setAngle(pin,angle,pwm):
     pwm.ChangeDutyCycle(0)
     
 def setHorizontalAngle(angle):
-  setAngle(servoPin2, angle, p2)
+    if(angle < 15):
+        angle = 0
+    if(angle > 160):
+        angle  = 160
+    setAngle(servoPin2, angle, p2)
   
 def setVerticalAngle(angle):
+    if(angle < 0):
+        angle = 0
+    if(angle > 90):
+        angle = 90
   setAngle(servoPin1, angle, p1)
   
 # Servo vertical orientation should be in range of 0-90

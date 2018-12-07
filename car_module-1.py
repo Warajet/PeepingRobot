@@ -3,10 +3,10 @@ import RPi.GPIO as GPIO
 #initialization
 default_pwm_frequency = 50
 pwm_pins = dict()
-pin_left_1 = 123
-pin_left_2 = 4324
-pin_right_3 = 123324
-pin_right_4 = 2134324
+pin_left_1 = 6
+pin_left_2 = 12
+pin_right_3 = 19
+pin_right_4 = 16
 
 def deinit():
     _cleanup_gpio()
@@ -77,9 +77,25 @@ def _init_gpio_pins():
 class ControlValues:
     
     def __init__(self):
-        self.direction = 'none'
+        self.direction = 'stop'
         self.duty_cycle = 100
+        self.horizontal_angle = 80
+        self.vertical_angle = 0
         
+    def set_horizontal_angle(self, angle):
+        self.horizontal_angle = angle
+        if(self.horizontal_angle < 15):
+            self.horizontal_angle = 15
+        if(self.horizontal_angle > 160):
+            self.horizontal_angle = 160
+            
+    def set_horizontal_angle(self, angle):
+        self.vertical_angle = angle
+        if(self.vertical_angle < 0):
+            self.vertical_angle = 0
+        if(self.vertical_angle > 90):
+            self.vertical_angle = 90
+            
     def set_direction(self, direction):
         self.direction = direction
 
@@ -95,19 +111,10 @@ class ControlValues:
     
     def get_current_direction(self):
         return self.direction
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
+    def get_current_horizontal_angle(self):
+        return self.horizontal_angle
+    
+    def get_current_vertical_angle(self):
+        return self.vertical_angle
+
