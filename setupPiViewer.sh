@@ -2,8 +2,8 @@
 
 # usage: ./setupPiViewer.sh
 
-printf "Pulling git"
+printf "Pulling git\n"
 git pull
-printf "Moving PiViewer to /var/www/html/piviewer"
-$target_dir=/var/www/html/piviewer/
+printf "Moving PiViewer to /var/www/html/piviewer\n"
+$target_dir="/var/www/html/piviewer/"
 sudo cp -r PiCamViewer/* $target_dir
