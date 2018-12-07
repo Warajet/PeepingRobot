@@ -8,3 +8,4 @@ class PrintPoseListener(DeviceListener):
 	def on_pose(self, pose):
 		pose_type = PoseType(pose)
 		print(pose_type.name)
+		return pose_type.name
