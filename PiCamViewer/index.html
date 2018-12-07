@@ -17,11 +17,20 @@
         top: 0;
         z-index: 100;
       }
+      #gamma {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 200;
+      }
     </style>
   </head>
   <body>
     <div id="webglviewer"></div>
     <canvas id="tempCanvas"></canvas>
+    <div id="gamma"></div>
 
     <script src="./js/three.min.js"></script>
     <script src="./js/StereoEffect.js"></script>
@@ -92,7 +101,6 @@
         if (context) {
           var piImage = new Image();
           piImage.onload = function() {
-            console.log('Drawing image');
             context.drawImage(piImage, 0, 0, canvas.width, canvas.height);
             texture.needsUpdate = true;
           }
