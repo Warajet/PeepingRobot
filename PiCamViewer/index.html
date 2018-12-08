@@ -149,11 +149,17 @@
         var beta     = evt.beta;  // [-180, 180]
         var gamma    = evt.gamma; // [-90, 90]
         
+        // Calibrate alpha
+        if ( gamma < 0 ){
+          alpha = (alpha + 180) % 360;
+        }
+        
         // Setup initial alpha value
         if (init_alpha == -1) {
           init_alpha = alpha;
           ops_init_alpha = (init_alpha + 180) % 360;
         }
+        
         
         var y = gamma;
         var z = alpha;
@@ -162,10 +168,6 @@
         if ( y < 0 ) y = 0;
         else if ( y > 0 ) y = 90 - y;
 
-        // Calibrate alpha
-        if ( y < 0 ){
-          z = Math.abs(z - 180) % 360;
-        }
 
         // Change z to degree of camera from car
         if ( z > init_alpha ){
