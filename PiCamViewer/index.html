@@ -72,7 +72,7 @@
         if (window.DeviceOrientationEvent) {
           window.addEventListener('deviceorientation', function(evt) {
             console.log(evt.gamma);
-            gammaElement.appendChild(evt.gamma);
+            gammaElement.appendChild("Hello");
             if (evt.gamma > -1 && evt.gamma < 1 && !lookingAtGround) {
               //lookingAtGround = true;
 
