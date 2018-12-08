@@ -1,0 +1,96 @@
+import sys
+sys.path.append('lib/')
+
+import car_module as car
+import servo_module as servo
+import myo_interface_module as myo
+
+import threading
+from time import sleep
+from time import time as current_time
+import math
+
+from device_listener import DeviceListener
+from pose_type import PoseType
+
+class WhileTrueThread(threading.Thread):
+  def __init__(self, interval = 0):
+    threading.Thread.__init__(self)
+    self.__interval = interval
+    self.__stop = False
+  def stop(self):
+    self.__stop = True
+  def _prepare(self):
+    pass
+  def _end(self):
+    pass
+  def run(self):
+    self._prepare()
+
+    while not self._stop :
+      self._loop()
+      sleep(self._interval)
+    self._end()
+
+
+class CarThread(WhileTrueThread):
+  def __init__(self, control_values):
+    WhileTrueThread.__init__(self, 0.1)
+    self.__control_values = control_values
+  def _loop(self):
+    control_values = self.__control_values
+    current_direction = control_values.get_current_direction()
+    current_duty_cycle = control_values.get_current_duty_cycle()
+    if(current_direction == 'stop'):
+      car.stop()
+    if(current_direction == 'forward'):
+      car.move_forward(current_duty_cycle)
+    if(current_direction == 'backward'):
+      car.move_backward(current_duty_cycle)
+    if(current_direction == 'left'):
+      car.turn_left(current_duty_cycle)
+    if(current_direction == 'right'):
+      car.turn_right(current_duty_cycle)
+    else:
+      pass
+                
+class ServoThread(WhileTrueThread):
+  def __init__(self, control_values):
+    WhileTrueThread.__init__(self, 0.1)
+    self.__control_values = control_values
+      
+  def _loop(self):
+    control_values = self.__control_values
+    current_horizontal_angle = control_values.get_current_horizontal_angle()
+    current_vertical_angle = control_values.get_current_vertical_angle()
+
+    servo.setHorizontalAngle(current_horizontal_angle)
+    servo.setVerticalAngle(current_vertical_angle)
+        
+class InputThread(WhileTrueThread, DeviceListener):
+  def __init__(self, control_values):
+    WhileTrueThread.__init__(self, 0.1)
+    self.__control_values = control_values
+
+  def _loop(self):
+    pass
+
+  def on_pose(self, pose):
+    self.cur_pose = PoseType(pose).name
+
+    if self.cur_pose == "FIST":
+      self.cur_dir = "stop"
+    elif self.cur_pose == "WAVE_IN":
+      self.cur_dir = "left"
+    elif self.cur_pose == "WAVE_OUT":
+      self.cur_dir = "right"
+    elif self.cur_pose == "FINGERS_SPREAD":
+      self.cur_dir = "forward"
+    elif self.cur_pose == "DOUBLE_TAP":
+      self.cur_dir = "backward"
+
+    self.__control_values.set_direction(self.cur_dir)
+    
+    print("Control value: " + self.__control_values)
+    print("Dir: " + self.cur_dir + ", Pose: " + self.cur_pose)
+        
