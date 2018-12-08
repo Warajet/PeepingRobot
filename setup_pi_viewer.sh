@@ -4,12 +4,12 @@
 
 printf "Pulling git...\n"
 git pull
-printf "Moving PiViewer to /var/www/html/piviewer ...\n"
-$target_dir="/var/www/html/piviewer"
-ls $target_dir
-if [ -d "$target_dir" ] && [ -d "PiCamViewer" ]
+printf "Moving PiViewer to /var/www/html/piviewer/ ...\n"
+if [ -d /var/www/html/piviewer ] && [ -d PiCamViewer ]
 then
-  sudo cp -r PiCamViewer/* "$target_dir"
+  cp -r PiCamViewer/* /var/www/html/piviewer/
+  printf "Restarting apache2...\n"
+  sudo service apache2 restart
 else
   printf "Directory not found.\n"
 fi
