@@ -160,7 +160,6 @@
           ops_init_alpha = (init_alpha + 180) % 360;
         }
         
-        
         var y = gamma;
         var z = alpha;
 
@@ -185,13 +184,12 @@
         }        
         
         var gamma_text = "gamma(y) = " + gamma;
-        var alpha_text = " alpha(z) = " + Math.round(alpha);
+        var alpha_text = " alpha(z) = " + alpha;
 
         var y_text = " y = " + Math.round(y);
         var z_text = " z = " + Math.round(z);
 
-
-        gammaElement.innerHTML = y_text + alpha_text + z_text;
+        gammaElement.innerHTML = y_text + z_text;
       }
     
     </script>
