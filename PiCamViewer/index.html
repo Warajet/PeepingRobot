@@ -70,20 +70,7 @@
 
         // Where we will check for orientation
         if (window.DeviceOrientationEvent) {
-          window.addEventListener('deviceorientation', function(evt) {
-            var gamma_text = "gamma = " + evt.gamma;
-            var beta_text = " beta = " + evt.beta;
-            var alpha_text = " alpha = " + evt.alpha;
-            //var orientationValue = document.createTextNode(gamma_text + beta_text + alpha_text);
-            gammaElement.innerHTML = gamma_text + beta_text + alpha_text;
-            if (evt.gamma > -1 && evt.gamma < 1 && !lookingAtGround) {
-              //lookingAtGround = true;
-
-              setTimeout(function() {
-                //lookingAtGround = false;
-              }, 4000);
-            }
-          }.bind(this));
+          window.addEventListener('deviceorientation', handleOrientation);
         }
 
         canvas = document.getElementById('tempCanvas');
@@ -153,6 +140,21 @@
           container.webkitRequestFullscreen();
         }
       }
+
+      function handleOrientation(evt){
+        var absolute = evt.absolute;
+        var alpha    = evt.alpha; // [0, 360]
+        var beta     = evt.beta;  // [-180, 180]
+        var gamma    = evt.gamma; // [-90, 90]
+        
+        var gamma_text = "gamma(y) = " + gamma;
+        var beta_text = " beta(x) = " + beta;
+        var alpha_text = " alpha(z) = " + alpha;
+
+        
+        gammaElement.innerHTML = gamma_text + beta_text + alpha_text;
+      }
+    
     </script>
   </body>
 </html>
