@@ -71,6 +71,7 @@
         // Where we will check for orientation
         if (window.DeviceOrientationEvent) {
           window.addEventListener('deviceorientation', function(evt) {
+            gammaElement.removeChild(gammaElement.lastChild);
             var gamma_text = "gamma" + evt.gamma;
             var beta_text = " beta" + evt.beta;
             var alpha_text = " alpha" + evt.alpha;
