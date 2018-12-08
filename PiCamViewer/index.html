@@ -203,7 +203,7 @@
         var data = { y: Math.round(y), z: Math.round(z) };
 
         $.ajax({
-          url: `http://${ip}:5000/receiver/`,
+          url: `http://${ip}:5000/receiver`,
           type: "POST",
           contentType: "application/json",
           data: JSON.stringify(data),
@@ -211,6 +211,10 @@
             console.log(data);
           }
         });
+        
+        // stop link reloading the page
+        event.preventDefault();
+
 }
 
     </script>
