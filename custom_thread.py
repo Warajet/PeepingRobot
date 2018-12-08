@@ -10,9 +10,6 @@ from time import sleep
 from time import time as current_time
 import math
 
-from device_listener import DeviceListener
-from pose_type import PoseType
-
 class WhileTrueThread(threading.Thread):
   def __init__(self, interval = 0):
     threading.Thread.__init__(self)
@@ -67,30 +64,27 @@ class ServoThread(WhileTrueThread):
     servo.setHorizontalAngle(current_horizontal_angle)
     servo.setVerticalAngle(current_vertical_angle)
         
-class InputThread(WhileTrueThread, DeviceListener):
+class InputThread(WhileTrueThread):
   def __init__(self, control_values):
     WhileTrueThread.__init__(self, 0.1)
     self.__control_values = control_values
 
   def _loop(self):
-    pass
+    cur_pose = myo.detected_pose()
 
-  def on_pose(self, pose):
-    self.cur_pose = PoseType(pose).name
+    if cur_pose == "FIST":
+      cur_dir = "stop"
+    elif cur_pose == "WAVE_IN":
+      cur_dir = "left"
+    elif cur_pose == "WAVE_OUT":
+      cur_dir = "right"
+    elif cur_pose == "FINGERS_SPREAD":
+      cur_dir = "forward"
+    elif cur_pose == "DOUBLE_TAP":
+      cur_dir = "backward"
 
-    if self.cur_pose == "FIST":
-      self.cur_dir = "stop"
-    elif self.cur_pose == "WAVE_IN":
-      self.cur_dir = "left"
-    elif self.cur_pose == "WAVE_OUT":
-      self.cur_dir = "right"
-    elif self.cur_pose == "FINGERS_SPREAD":
-      self.cur_dir = "forward"
-    elif self.cur_pose == "DOUBLE_TAP":
-      self.cur_dir = "backward"
+    self.__control_values.set_direction(cur_dir)
 
-    self.__control_values.set_direction(self.cur_dir)
-    
     print("Control value: " + self.__control_values)
-    print("Dir: " + self.cur_dir + ", Pose: " + self.cur_pose)
+    print("Dir: " + cur_dir + ", Pose: " + cur_pose)
         
