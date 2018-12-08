@@ -18,7 +18,8 @@ def output():
 @app.route('/receiver', methods = ['POST'])
 def worker():
     # read json + reply
-    data = request.json['abc']
+    data = request.get_json()
+    return data
 
 if __name__ == '__main__':
     # run!
