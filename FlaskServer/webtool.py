@@ -19,7 +19,8 @@ def output():
 def worker():
     # read json + reply
     data = request.get_json()
-    return data
+    print(data)
+    return "hello"
 
 if __name__ == '__main__':
     # run!
