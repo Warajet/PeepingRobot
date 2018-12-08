@@ -162,6 +162,11 @@
         if ( y < 0 ) y = 0;
         else if ( y > 0 ) y = 90 - y;
 
+        // Calibrate alpha
+        if ( y < 0 ){
+          z = (180 + z) % 360;
+        }
+
         // Change z to degree of camera from car
         if ( z > init_alpha ){
         // Left side from origin
