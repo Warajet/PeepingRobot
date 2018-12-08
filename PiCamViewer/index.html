@@ -202,7 +202,7 @@
 
         var data = { y: Math.round(y), z: Math.round(z) }
 
-        $.post(`http://${ip}:5000`, data, function(data, status){
+        $.post(`http://${ip}:5000/receiver`, data, function(data, status){
           console.log(status);
         });
       }
