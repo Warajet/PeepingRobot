@@ -71,8 +71,11 @@
         // Where we will check for orientation
         if (window.DeviceOrientationEvent) {
           window.addEventListener('deviceorientation', function(evt) {
-            console.log(evt.gamma);
-            gammaElement.appendChild("Hello");
+            var gamma_text = "gamma" + evt.gamma;
+            var beta_text = " beta" + evt.beta;
+            var alpha_text = " alpha" + evt.alpha;
+            var orientationValue = document.createTextNode(gamma_text + beta_text + alpha_text);
+            gammaElement.appendChild(orientationValue);
             if (evt.gamma > -1 && evt.gamma < 1 && !lookingAtGround) {
               //lookingAtGround = true;
 
