@@ -206,7 +206,7 @@
           url: `http://${ip}:5000/receiver/`,
           type: "POST",
           contentType: "application/json",
-          data: data,
+          data: JSON.stringify(data),
           success: function( data ) {
             console.log(data);
           }

@@ -11,13 +11,11 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
-@cross_origin()
 def output():
     # serve index template
     return "Hello World!"
 
 @app.route('/receiver', methods = ['POST'])
-@cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def worker():
     # read json + reply
     data = request.get_json()
