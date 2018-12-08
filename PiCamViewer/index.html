@@ -33,7 +33,10 @@
   <body>
     <div id="webglviewer"></div>
     <canvas id="tempCanvas"></canvas>
-    <div id="gamma"></div>
+    <div id="gamma">
+      <p id="y"></p>
+      <p id="z"></p>
+    </div>
 
     <script src="./js/three.min.js"></script>
     <script src="./js/StereoEffect.js"></script>
@@ -64,11 +67,13 @@
         element = renderer.domElement;
         container = document.getElementById('webglviewer');
         container.appendChild(element);
-        gammaElement = document.getElementById('gamma');
 
         effect = new THREE.StereoEffect(renderer);
 
         element.addEventListener('click', fullscreen, false);
+        
+        yElement = document.getElementById('y');
+        zElement = document.getElementById('z');
 
         // Where we will check for orientation
         if (window.DeviceOrientationEvent) {
@@ -144,6 +149,8 @@
       }
 
       function handleOrientation(evt){
+        
+       
         var absolute = evt.absolute;
         var alpha    = evt.alpha; // [0, 360]
         var beta     = evt.beta;  // [-180, 180]
@@ -189,7 +196,8 @@
         var y_text = " y = " + Math.round(y);
         var z_text = " z = " + Math.round(z);
 
-        gammaElement.innerHTML = y_text + z_text;
+        yElement.innerHTML = y_text;
+        zElement.innerHTML = z_text;
       }
     
     </script>
