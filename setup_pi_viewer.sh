@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# usage: ./setupPiViewer.sh
+# usage: ./setup_pi_viewer.sh
 
 printf "Pulling git...\n"
 git pull
