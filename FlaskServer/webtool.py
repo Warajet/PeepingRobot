@@ -33,8 +33,6 @@ def worker():
     global z
     # read json + reply
     data = request.get_json(force=True)
-    print("Data is:")
-    print(data)
     
     y = data["y"]
     z = data["z"]
