@@ -13,6 +13,7 @@ p2.start(2.5) # Initialization
 
 
 def setAngle(pin,angle,pwm):
+    GPIO.setmode(GPIO.BCM)
     duty = angle / 18 + 2
     GPIO.output(pin, True)
     pwm.ChangeDutyCycle(duty)

@@ -1,14 +1,20 @@
 import requests
 import time
-
-url = "http://192.168.0.118:5000/yz_json"
-
-while(True):
-    r = requests.get(url)
-
-    print(r.status_code) # 200
-    print(r.headers['content-type']) # 'application/json; charset=utf8'
-    print(r.encoding) # 'utf-8'
-    print(r.text) # u'{"type":"User"...'
-    #print(r.json()) #{u'private_gists': 419, u'total_private_repos': 77, ...}
-    time.sleep(0.1)
+class Camera_requestor:
+    def __init__(self):
+        self.url = "http://192.168.0.118:5000/yz_json"
+        self.y = 0
+        self.z = 0
+    def request_yz_data(self):
+        r = requests.get(self.url)
+        tmp = r.text.split(',')
+        self.y =  int(tmp[0])
+        self.z = int(tmp[1])
+        print("Y : ", self.y, "Z: ", self.z)
+        
+    def get_Y(self):
+        return self.y
+    
+    def get_Z(self):
+        return self.z
+    

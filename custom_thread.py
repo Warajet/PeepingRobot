@@ -8,6 +8,8 @@ from myo import Myo
 from vibration_type import VibrationType
 import myo_interface_module as myo
 
+from request_cam_position import Camera_requestor
+
 import threading
 from time import sleep
 from time import time as current_time
@@ -15,6 +17,7 @@ import math
 
 from device_listener import DeviceListener
 from pose_type import PoseType
+
 
 class WhileTrueThread(threading.Thread):
     def __init__(self, interval = 0):
@@ -39,6 +42,7 @@ class CarThread(WhileTrueThread):
     def __init__(self, control_values):
         WhileTrueThread.__init__(self, 0.1)
         self.__control_values = control_values
+
     def _loop(self):
         control_values = self.__control_values
         current_direction = control_values.get_current_direction()
@@ -62,11 +66,19 @@ class ServoThread(WhileTrueThread):
         self.__control_values = control_values
         self.horizontal_angle = self.__control_values.set_horizontal_angle(80)
         self.vertical_angle = self.__control_values.set_vertical_angle(0)
-        
         servo.set_default_angle()
+
+        self.cam_requestor = Camera_requestor()
         
     def _loop(self):
+        self.cam_requestor.request_yz_data()
+        
         control_values = self.__control_values
+
+        control_values.set_horizontal_angle(self.cam_requestor.get_Z() + 80)
+        control_values.set_vertical_angle(self.cam_requestor.get_Y())
+        
+        #get current horizontal and vertical angle updated by POST method in flask
         self.horizontal_angle = control_values.get_current_horizontal_angle()
         self.vertical_angle = control_values.get_current_vertical_angle()
 
@@ -89,8 +101,3 @@ class InputThread(WhileTrueThread):
         
     def _end(self):
         myo.deinit_myo()
-
-class VRThread(WhileTrueThread):
-    def __init__(self, control_values):
-        WhileTrueThread.__init__(self, 0.0)
-        

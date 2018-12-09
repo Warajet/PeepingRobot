@@ -3,10 +3,10 @@ from time import sleep
 #initialization
 default_pwm_frequency = 50
 pwm_pins = dict()
-pin_left_1 = 13
-pin_left_2 = 15
-pin_right_3 = 7
-pin_right_4 = 11
+pin_left_1 = 15
+pin_left_2 = 13
+pin_right_3 = 11
+pin_right_4 = 7
 
 def deinit():
     _cleanup_gpio()
