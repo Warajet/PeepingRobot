@@ -200,20 +200,25 @@
         yElement.innerHTML = y_text;
         zElement.innerHTML = z_text;
 
-        var data = { y: Math.round(y), z: Math.round(z) };
-
+        var my_data = { y: Math.round(y), z: Math.round(z) };
+        
         $.ajax({
-          url: `http://${ip}:5000/receiver`,
-          type: "POST",
-          contentType: "application/json",
-          data: JSON.stringify(data),
-          success: function( data ) {
-            console.log(data);
+          url: "http://192.168.0.118:5000/receiver",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          type: "POST", /* or type:"GET" or type:"PUT" */
+          data: JSON.stringify(my_data),
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (error) {
+            console.log(error);
           }
         });
-        
         // stop link reloading the page
         event.preventDefault();
+
 
 }
 
