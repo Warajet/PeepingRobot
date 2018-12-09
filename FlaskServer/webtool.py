@@ -21,12 +21,16 @@ def output():
 
 @app.route('/yz_json')
 def api_yz():
+    global y
+    global z
     # serve index template
     return str(y) + "," + str(z)
 
 
 @app.route('/receiver', methods = ['POST'])
 def worker():
+    global y
+    global z
     # read json + reply
     data = request.get_json(force=True)
     print("Data is:")
