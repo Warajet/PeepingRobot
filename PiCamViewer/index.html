@@ -206,7 +206,6 @@
         yElement.innerHTML = y_text;
         zElement.innerHTML = z_text;
 
-        var my_data = { y: Math.round(y), z: Math.round(z) };
 
 
         if( Math.abs(y - cur_y) > 5 || Math.abs(z - cur_z) > 5 ){
@@ -218,6 +217,7 @@
       }
 
       function sendAjaxYZ(y,z){
+        var my_data = { y: Math.round(y), z: Math.round(z) };
         $.ajax({
           url: "http://192.168.0.118:5000/receiver",
           headers: {
