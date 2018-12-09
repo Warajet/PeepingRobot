@@ -200,8 +200,8 @@
         var gamma_text = "gamma(y) = " + gamma;
         var alpha_text = " alpha(z) = " + alpha;
 
-        var y_text = " y = " + Math.round(y) + " cur_y = " + Math.round(cur_y);
-        var z_text = " z = " + Math.round(z) + " cur_z = " + Math.round(cur_z);
+        var y_text = " y = " + Math.round(y) + " cur_y = " + Math.round(cur_y) + " diff = " + Math.abs(y - cur_y);
+        var z_text = " z = " + Math.round(z) + " cur_z = " + Math.round(cur_z) + " diff = " + Math.abs(z - cur_z);
 
         yElement.innerHTML = y_text;
         zElement.innerHTML = z_text;
