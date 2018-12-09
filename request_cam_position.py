@@ -1,15 +1,10 @@
-from selenium import webdriver
+import requests
 
-# create a driver
-driver = webdriver.Chrome()
+url = "http://192.168.0.118:5000/yz_json"
+r = requests.get(url)
 
-ip = "192.168.0.118"
-# get the homepage
-driver.get("http://" + ip + "/piviewer")
-
-y_element = driver.find_element_by_id("y")
-z_element = driver.find_element_by_id("z")
-
-
-print(y_element)
-print(z_element)
+print(r.status_code) # 200
+print(r.headers['content-type']) # 'application/json; charset=utf8'
+print(r.encoding) # 'utf-8'
+print(r.text) # u'{"type":"User"...'
+#print(r.json()) #{u'private_gists': 419, u'total_private_repos': 77, ...}
