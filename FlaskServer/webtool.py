@@ -22,7 +22,7 @@ def output():
 @app.route('/yz_json')
 def api_yz():
     # serve index template
-    return (y,z)
+    return str(y) + "," + str(z)
 
 
 @app.route('/receiver', methods = ['POST'])
