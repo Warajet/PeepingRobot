@@ -10,7 +10,7 @@ class Camera_requestor:
         tmp = r.text.split(',')
         self.y =  int(tmp[0])
         self.z = int(tmp[1])
-        print("Y : ", self.y, "Z: ", self.z)
+        print("Y: ", self.y,"Z: ", self.z)
         
     def get_Y(self):
         return self.y

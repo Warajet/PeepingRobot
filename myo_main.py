@@ -1,15 +1,12 @@
-#import camera_module as cam
-from custom_thread import CarThread, ServoThread, InputThread
+from custom_thread import CarThread, InputThread
 import car_module as car
 import myo_interface_module as myo
-import servo_module as servo
 from time import sleep
 import os
 
 def deinit_modules():
     car.deinit()
     myo.deinit_myo()
-    servo.deinit_servo()
 
 def main():
     car._init_gpio_pins()
@@ -18,15 +15,12 @@ def main():
     #Let the peeping car to have common control values
     input_thread = InputThread(control_values)
     car_thread = CarThread(control_values)
-    servo_thread = ServoThread(control_values)
 
     input_thread.start()
     car_thread.start()
-    servo_thread.start()
 
     input_thread.join()
     car_thread.stop()
-    servo_thread.stop()
 
     sleep(1)
 

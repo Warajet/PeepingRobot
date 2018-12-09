@@ -2,7 +2,6 @@ import sys
 sys.path.append('lib/')
 
 import car_module as car
-import servo_module as servo
 import print_pose_listener as pose_listener
 from myo import Myo
 from vibration_type import VibrationType
@@ -59,35 +58,7 @@ class CarThread(WhileTrueThread):
             car.turn_right(current_duty_cycle)
         else:
             pass
-                
-class ServoThread(WhileTrueThread):
-    def __init__(self, control_values):
-        WhileTrueThread.__init__(self, 0.0)
-        self.__control_values = control_values
-        self.horizontal_angle = self.__control_values.set_horizontal_angle(80)
-        self.vertical_angle = self.__control_values.set_vertical_angle(0)
-        servo.set_default_angle()
-
-        self.cam_requestor = Camera_requestor()
-        
-    def _loop(self):
-        self.cam_requestor.request_yz_data()
-        
-        control_values = self.__control_values
-
-        control_values.set_horizontal_angle(self.cam_requestor.get_Z() + 80)
-        control_values.set_vertical_angle(self.cam_requestor.get_Y())
-        
-        #get current horizontal and vertical angle updated by POST method in flask
-        self.horizontal_angle = control_values.get_current_horizontal_angle()
-        self.vertical_angle = control_values.get_current_vertical_angle()
-
-        servo.setHorizontalAngle(self.horizontal_angle)
-        servo.setVerticalAngle(self.vertical_angle)
-        
-    def _end(self):
-        myo.deinit_servo()
-        
+            
 class InputThread(WhileTrueThread):
     def __init__(self, control_values):
         WhileTrueThread.__init__(self, 0.0)
@@ -97,7 +68,4 @@ class InputThread(WhileTrueThread):
     def _loop(self):
         myo.detect_myo_pose()
         current_direction = self.__control_values.get_current_direction()
-        print("Current Direction: " + current_direction)
-        
-    def _end(self):
-        myo.deinit_myo()
+        print("Entered Input Thread: " + current_direction)
