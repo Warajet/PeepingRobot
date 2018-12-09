@@ -51,7 +51,9 @@
         container,
         effect,
         canvas,
-        context;
+        context,
+        cur_y,
+        cur_z;
       var pi_ip = "192.168.0.118";
       var init_alpha = -1;
       var ops_init_alpha = -1;
@@ -161,15 +163,21 @@
         if ( gamma < 0 ){
           alpha = (alpha + 180) % 360;
         }
+        
+        var y = gamma;
+        var z = alpha;
 
         // Setup initial alpha value
         if (init_alpha == -1) {
           init_alpha = alpha;
           ops_init_alpha = (init_alpha + 180) % 360;
+          cur_y = y;
+          cur_z = z;
         }
 
-        var y = gamma;
-        var z = alpha;
+        var prev_y = cur_y;
+        var prev_z = cur_z;
+        
 
         // Chage y to degree of camera from car
         if ( y < 0 ) y = 0;
@@ -190,6 +198,10 @@
           // Right side from origin
           z = 180 - Math.abs(z - ops_init_alpha);
         }        
+        
+        cur_y = y;
+        cur_z = z;
+
 
         var gamma_text = "gamma(y) = " + gamma;
         var alpha_text = " alpha(z) = " + alpha;
@@ -201,7 +213,15 @@
         zElement.innerHTML = z_text;
 
         var my_data = { y: Math.round(y), z: Math.round(z) };
+
+
+        if( Math.abs(y - prev_y) > 5 || Math.abs(z - prev_z) > 5 ){
+          sendAjaxYZ(y,z);
+        }
         
+      }
+
+      function sendAjaxYZ(y,z){
         $.ajax({
           url: "http://192.168.0.118:5000/receiver",
           headers: {
@@ -218,9 +238,7 @@
         });
         // stop link reloading the page
         event.preventDefault();
-
-
-}
+      }
 
     </script>
   </body>
