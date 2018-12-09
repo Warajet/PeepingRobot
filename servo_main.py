@@ -16,7 +16,6 @@ class Servo:
     def loop(self):
         self.cam_requestor.request_yz_data()
 
-        print("Entered Servo Thread Loop")
         self.horizontal_angle = self.cam_requestor.get_Z() + 80
         self.vertical_angle = self.cam_requestor.get_Y()
         servo.setHorizontalAngle(self.horizontal_angle)
@@ -29,7 +28,7 @@ def main():
     servo1 = Servo(None)
     while True:
         servo1.loop()
-        sleep(0.1)
+        sleep(0.5)
 
 if __name__ == '__main__':
     main()
