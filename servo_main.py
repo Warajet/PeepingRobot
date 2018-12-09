@@ -29,7 +29,7 @@ def main():
     servo1 = Servo(None)
     while True:
         servo1.loop()
-        sleep(0.01)
+        sleep(0.1)
 
 if __name__ == '__main__':
     main()
