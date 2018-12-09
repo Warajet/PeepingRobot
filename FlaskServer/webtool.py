@@ -35,7 +35,7 @@ def worker():
     y = data["y"]
     z = data["z"]
 
-    print(y + "," + z)
+    print(y, ",", z)
     
     return "Data received"
 
