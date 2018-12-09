@@ -11,7 +11,8 @@ cors = CORS(app)
 #app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Variables
-yz_json = {}
+y = 0
+z = 0
 
 @app.route('/')
 def output():
@@ -21,7 +22,7 @@ def output():
 @app.route('/yz_json')
 def api_yz():
     # serve index template
-    return yz_json
+    return (y,z)
 
 
 @app.route('/receiver', methods = ['POST'])
@@ -30,9 +31,11 @@ def worker():
     data = request.get_json(force=True)
     print("Data is:")
     print(data)
+    
+    y = data["y"]
+    z = data["z"]
 
-    yz_json = data
-    print(yz_json)
+    print(y + "," + z)
     
     return "Data received"
 
