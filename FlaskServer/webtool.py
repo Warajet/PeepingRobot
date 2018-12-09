@@ -1,9 +1,14 @@
 import sys
 
+# pip install Flask
 from flask import Flask, render_template, request, redirect, Response
+# pip install flask-cors
+from flask_cors import CORS, cross_origin
 import random, json
 
 app = Flask(__name__)
+cors = CORS(app)
+#app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def output():
@@ -13,13 +18,10 @@ def output():
 @app.route('/receiver', methods = ['POST'])
 def worker():
     # read json + reply
-    data = request.get_json()
-    result = ''
-
-    for item in data:
-    # loop over every row
-        result += str(item['make']) + '\n'
-        return result
+    data = request.get_json(force=True)
+    print("Data is:")
+    print(data)
+    return "hello"
 
 if __name__ == '__main__':
     # run!
