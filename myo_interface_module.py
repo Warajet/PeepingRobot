@@ -2,7 +2,6 @@ import sys
 sys.path.append('../lib/')
 
 from myo import Myo
-from print_pose_listener import PrintPoseListener
 from vibration_type import VibrationType
 
 print("Start of myo_interface_module")
