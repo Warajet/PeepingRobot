@@ -2,16 +2,17 @@
 from custom_thread import CarThread, ServoThread, InputThread
 import car_module as car
 import myo_interface_module as myo
-
+import servo_module as servo
 from time import sleep
 import os
 
 def deinit_modules():
     car.deinit()
-    myo.deinit()
+    myo.deinit_myo()
+    servo.deinit_servo()
 
 def main():
-    car.init_gpio_pins()
+    car._init_gpio_pins()
     control_values = car.ControlValues()
 
     #Let the peeping car to have common control values
