@@ -175,10 +175,6 @@
           cur_z = z;
         }
 
-        var prev_y = cur_y;
-        var prev_z = cur_z;
-        
-
         // Chage y to degree of camera from car
         if ( y < 0 ) y = 0;
         else if ( y > 0 ) y = 90 - y;
@@ -199,8 +195,6 @@
           z = 180 - Math.abs(z - ops_init_alpha);
         }        
         
-        cur_y = y;
-        cur_z = z;
 
 
         var gamma_text = "gamma(y) = " + gamma;
@@ -215,8 +209,10 @@
         var my_data = { y: Math.round(y), z: Math.round(z) };
 
 
-        if( Math.abs(y - prev_y) > 5 || Math.abs(z - prev_z) > 5 ){
+        if( Math.abs(y - cur_y) > 5 || Math.abs(z - cur_z) > 5 ){
           sendAjaxYZ(y,z);
+          cur_y = y;
+          cur_z = z;
         }
         
       }
