@@ -8,7 +8,7 @@ import random, json
 
 app = Flask(__name__)
 cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+#app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def output():
@@ -18,10 +18,9 @@ def output():
 @app.route('/receiver', methods = ['POST'])
 def worker():
     # read json + reply
-    data = request.get_json()
+    data = request.get_json(force=True)
     print("Data is:")
     print(data)
-    print(data["name"])
     return "hello"
 
 if __name__ == '__main__':
