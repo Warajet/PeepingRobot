@@ -18,7 +18,7 @@ def output():
 @app.route('/receiver', methods = ['POST'])
 def worker():
     # read json + reply
-    data = request.get_json()
+    data = request.json
     print(data)
     return "hello"
 
