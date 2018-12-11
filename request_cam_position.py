@@ -2,7 +2,7 @@ import requests
 import time
 class Camera_requestor:
     def __init__(self):
-        self.url = "http://192.168.0.118:5000/yz_json"
+        self.url = "http://192.168.0.110:5000/yz_json"
         self.y = 0
         self.z = 0
     def request_yz_data(self):

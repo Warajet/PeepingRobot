@@ -54,7 +54,7 @@
         context,
         cur_y,
         cur_z;
-      var pi_ip = "192.168.0.118";
+      var pi_ip = "192.168.0.110";
       var init_alpha = -1;
       var ops_init_alpha = -1;
 
@@ -98,7 +98,7 @@
         cameraMesh = new THREE.Mesh(cameraPlane, new THREE.MeshBasicMaterial({
           color: 0xffffff, opacity: 1, map: texture
         }));
-        cameraMesh.position.z = -200;
+        cameraMesh.position.z = -250;
         scene.add(cameraMesh);
         animate();
       }
@@ -110,7 +110,7 @@
             context.drawImage(piImage, 0, 0, canvas.width, canvas.height);
             texture.needsUpdate = true;
           }
-          piImage.src = `http://${pi_ip}/picam/cam_pic.php?time=` + new Date().getTime();
+          piImage.src = `http://${pi_ip}/cam_pic.php?time=` + new Date().getTime();
         }
         requestAnimationFrame(animate);
 
@@ -219,7 +219,7 @@
       function sendAjaxYZ(y,z){
         var my_data = { y: Math.round(y), z: Math.round(z) };
         $.ajax({
-          url: "http://192.168.0.118:5000/receiver",
+          url: "http://192.168.0.110:5000/receiver",
           headers: {
             "Content-Type": "application/json"
           },
