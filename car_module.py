@@ -82,7 +82,7 @@ class ControlValues:
     
     def __init__(self):
         self.direction = 'stop'
-        self.duty_cycle = 100
+        self.duty_cycle = 70
         self.horizontal_angle = 80
         self.vertical_angle = 0
         
