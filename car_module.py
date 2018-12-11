@@ -13,9 +13,9 @@ def deinit():
 def stop():
     _set_duty_cycle_for_pins(0,0,0,0)
 def turn_left(duty_cycle):
-    _set_duty_cycle_for_pins(0 , duty_cycle, duty_cycle, 0)
+    _set_duty_cycle_for_pins(0 , duty_cycle / 2, duty_cycle / 2, 0)
 def turn_right(duty_cycle):
-    _set_duty_cycle_for_pins(duty_cycle, 0 , 0 , duty_cycle)
+    _set_duty_cycle_for_pins(duty_cycle / 2, 0 , 0 , duty_cycle / 2)
      
 #Have split_ratio in case the user would like to gradually either move right or left    
 def move_forward(duty_cycle, split_ratio = 0.5):
